@@ -64,17 +64,29 @@ function MyArrayPrototype() {
     }
     return array;
   };
-  this.slice = function (end, begin = 0) {
+  this.slice = function (begin = 0, end = 0) {
     let array = [];
+    let newArr = [];
     for (let index = 0; index < this.length; index++) {
       array[index] = this[index];
     }
-    console.log(begin);
-    console.log(end);
-    console.log(end - begin);
-    const length = end - begin;
-    if(!length) return this;
-    let newArr = [];
+    if(begin > this.length) return []
+    if(begin == 0 && end === 0) return this;
+    if(begin < 0) {
+        const length = begin * -1;
+        const newBegin = this.length - length;
+        for (let index = 0; index < length; index++) {
+            newArr[index] = array[newBegin+index];
+        }
+        return newArr;
+    }
+    if(end < 0 ){
+        const length = this.length + end - 2;
+        for (let index = 0; index < length; index++) {
+            newArr[index] = array[begin+index];
+        } 
+    }
+    const length = end == 0 ? begin + 1 : end - begin;
     for (let index = 0; index < length; index++) {
         newArr[index] = array[begin+index];
     }
@@ -93,7 +105,9 @@ function MyArray() {
 }
 MyArray.prototype = new MyArrayPrototype();
 
-const MyArrayNumbers = new MyArray(1,6,8,9);
+const MyArrayNumbers = new MyArray('ant', 'bison', 'camel', 'duck', 'elephant');
+const arrayNumbers = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+
 // MyArrayNumbers.push(777, 333);
 // console.log(MyArrayNumbers);
 // MyArrayNumbers.pop();
@@ -105,10 +119,14 @@ const MyArrayNumbers = new MyArray(1,6,8,9);
 // console.log(MyArrayNumbers.shift());
 // console.log(MyArrayNumbers.concat([7,9]));
 // console.log(MyArrayNumbers);
-console.log(MyArrayNumbers.slice(2));
+// console.log(MyArrayNumbers.slice(2));
+// console.log(MyArrayNumbers.slice(2, 4));
+// console.log(MyArrayNumbers.slice(1, 5));
+// console.log(MyArrayNumbers.slice(-2));
+// console.log(MyArrayNumbers.slice(2, -4));
+console.log(MyArrayNumbers.slice());
 console.log(MyArrayNumbers);
 
-const arrayNumbers = [1,6,8,9];
 // console.log(arrayNumbers.pop());
 // console.log(arrayNumbers.indexOf(6));
 // console.log(arrayNumbers.lastIndexOf(6));
@@ -117,5 +135,9 @@ const arrayNumbers = [1,6,8,9];
 // console.log(arrayNumbers.shift());
 // console.log(arrayNumbers.concat([7,9]));
 // console.log(arrayNumbers);
-console.log(arrayNumbers.slice(2));
+// console.log(arrayNumbers.slice(2, 4));
+// console.log(arrayNumbers.slice(1, 5));
+// console.log(arrayNumbers.slice(-2));
+// console.log(arrayNumbers.slice(2, -1));
+console.log(arrayNumbers.slice());
 console.log(arrayNumbers);
